@@ -857,7 +857,10 @@
 
 /datum/special_trait/chosen/on_apply(mob/living/carbon/human/character, silent)
 	character.attributes?.add_sheet(/datum/attribute_holder/sheet/job/chosen)
-	switch(character.patron?.type)
+	var/patron_check = character.patron
+	if(!ispath(patron_check))
+		patron_check = character.patron.type
+	switch(patron_check)
 		if(/datum/patron/divine/astrata)
 			character.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 		if(/datum/patron/divine/eora)
@@ -937,7 +940,7 @@
 /datum/special_trait/dark_secrets/on_apply(mob/living/carbon/human/character, silent)
 	character.attributes?.add_sheet(/datum/attribute_holder/sheet/job/dark_secrets)
 	character.add_spell(/datum/action/cooldown/spell/status/blood_sight, silent = TRUE, mastery_spell = TRUE)
-	character.add_spell(/datum/action/cooldown/spell/projectile/blood_steal, silent = TRUE, mastery_spell = TRUE)
+	character.add_spell(/datum/action/cooldown/spell/blood_steal, silent = TRUE, mastery_spell = TRUE)
 	character.grant_language(/datum/language/sanguine)
 	character.adjust_technique_mastery_points(3)
 	character.adjust_form_mastery_points(4, specific_form = FORM_BLOOD)
